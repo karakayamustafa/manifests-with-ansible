@@ -18,7 +18,7 @@
         definition: 
           apiVersion: v1
           data:
-            .dockerconfigjson: {{ lookup('env','REGCRED') }}
+            .dockerconfigjson: "{{ lookup('env','REGCRED') }}"
           kind: Secret
           metadata:
             name: regcred
