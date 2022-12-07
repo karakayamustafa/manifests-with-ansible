@@ -9,7 +9,7 @@
       kubernetes.core.k8s:
         api_version: v1
         kind: Namespace
-        name: myapp
+        name: app
         state: present
 
     - name: Ensure registry secret exists.
@@ -18,12 +18,18 @@
         definition: 
           apiVersion: v1
           data:
-            .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJrYXJha2F5YW11c3QiLCJwYXNzd29yZCI6ImRja3JfcGF0X01ORy1tZHotcDJCRXAxT21VYThWMXUybldnTSIsImF1dGgiOiJhMkZ5WVd0aGVXRnRkWE4wT21SamEzSmZjR0YwWDAxT1J5MXRaSG90Y0RKQ1JYQXhUMjFWWVRoV01YVXlibGRuVFE9PSJ9fX0=
+            .dockerconfigjson: {{ lookup('env','REGCRED') }}
           kind: Secret
           metadata:
             name: regcred
-            namespace: myapp
+            namespace: app
           type: kubernetes.io/dockerconfigjson
+    
+    - name: Apply deployment.yml
+      kubernetes.core.k8s:
+        state: present
+        src: manifests/deployment.yml
+     
 
 
 
