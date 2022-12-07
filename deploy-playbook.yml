@@ -12,13 +12,17 @@
         name: app
         state: present
 
+    - name: Setting host facts using complex arguments
+      ansible.builtin.set_fact:
+        regcred: "{{ lookup('env','REGCRED') }}"
+
     - name: Ensure registry secret exists.
       kubernetes.core.k8s:
         state: present
         definition: 
           apiVersion: v1
           data:
-            .dockerconfigjson: "{{ lookup('env','REGCRED') }}"
+            .dockerconfigjson: "{{ regcred }}"
           kind: Secret
           metadata:
             name: regcred
