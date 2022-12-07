@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dream-demo-app
+  namespace: app
+spec:
+  selector:
+    matchLabels:
+      app: demo
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: spring-petclinic
+        image: "karakayamust/java-test"
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: regcred

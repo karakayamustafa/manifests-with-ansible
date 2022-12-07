@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dream-demo-service
+spec:
+  type: ClusterIP
+  selector:
+    app: demo
+  ports:
+  - name: spring-petclinic-port
+    protocol: TCP
+    port: 38080
+    targetPort: 8080
